@@ -191,7 +191,7 @@ Edite novamente o arquivo acima cluster.yml que acabamos de gerar e modifique  a
   192.168.1.22  
   [admin]  
   192.168.1.19  
-- Execute esse playbook como usuario admincluster
+- Execute esse playbook como usuario admincluster  
   su - admincluster  
   cd /etc/ansible  
   ansible-playbook play-cria-cluster-rancher.yml --skip-tag remove  
