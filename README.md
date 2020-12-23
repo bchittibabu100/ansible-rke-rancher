@@ -10,9 +10,7 @@ AMBIENTE: 3 SERVIDORES
 192.168.1.20 -- > MASTER - ETCD
 192.168.1.21 -- > WORKER
 192.168.1.22 -- > WORKER
-##################################
 
-##############################################
 CASO NAO TENHA UM DNS USE O ARQUIVO HOSTS - 
 COPIE ESSE ARQUIVO PARA TODOS OS SERVIDORES
 vim /etc/hosts
