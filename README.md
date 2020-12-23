@@ -10,10 +10,10 @@ PARA QUE O CLUSTER SEJA CRIADO VIA ANSIBLE UTILIZANDO O RKE É NECESSÁRIO EXECU
 
 # OBS: Não será contemplada a instalação do Ansible
 Ambiente de exemplo: 
-- 192.168.1.19 --> SERVIDOR ANSIBLE 
+- 192.168.1.19 --> SERVIDOR ANSIBLE   
 - 192.168.1.20 -- > MASTER - ETCD
-- 192.168.1.21 -- > WORKER1
-- 192.168.1.22 -- > WORKER2
+- 192.168.1.21 -- > WORKER1  
+- 192.168.1.22 -- > WORKER2  
 
 Caso não tenha um dns use o arquivo hosts:  
 192.168.1.19 ansible.homelab.lab.local    
