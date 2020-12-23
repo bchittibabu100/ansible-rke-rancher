@@ -1,7 +1,7 @@
 # Ansible + RKE - Instruções de Uso
 																																						
 Data Criação: 23/12/2020																																								
-Qualquer dúvida por favor me envie um e-mail :  
+Qualquer dúvida por favor me envie um e-mail :    
 leandrojpg@gmail.com	  																																						
 																																											
 O RKE É UM BINARIO GO QUE FAZ A CRIAÇÃO FACILITADA DE UM CLUSTER KUBERNETES.
