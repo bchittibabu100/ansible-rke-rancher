@@ -100,7 +100,7 @@ cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible
    sudo mv rke /usr/local/bin/  
    sudo chmod +x /usr/local/bin/rke  
 
-- Gerando o arquivo de criação do cluster
+- Gerando o arquivo de criação do cluster  
 rke config cluster.yml ( O nome do arquivo fica a seu critério) Será gerada uma saída semelhante a demonstrada abaixo  
 
 [+] Cluster Level SSH Private Key Path [~/.ssh/id_rsa]: -> /home/admincluster/.ssh/id_rsa  
