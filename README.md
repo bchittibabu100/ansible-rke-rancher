@@ -1,7 +1,7 @@
 # Ansible + RKE - Instruções de Uso
 																																						
-Data Criação: 23/12/2020																																								
-Qualquer dúvida por favor me envie um e-mail :    
+Data Criação: 23/12/2020  																																								
+Qualquer dúvida por favor me envie um e-mail:   
 leandrojpg@gmail.com	  																																						
 																																											
 O RKE É UM BINARIO GO QUE FAZ A CRIAÇÃO FACILITADA DE UM CLUSTER KUBERNETES.
@@ -12,8 +12,8 @@ PARA QUE O CLUSTER SEJA CRIADO VIA ANSIBLE UTILIZANDO O RKE É NECESSÁRIO EXECU
 Ambiente de exemplo: 
 - 192.168.1.19 --> SERVIDOR ANSIBLE 
 - 192.168.1.20 -- > MASTER - ETCD
-- 192.168.1.21 -- > WORKER
-- 192.168.1.22 -- > WORKER
+- 192.168.1.21 -- > WORKER1
+- 192.168.1.22 -- > WORKER2
 
 Caso não tenha um dns use o arquivo hosts:  
 192.168.1.19 ansible.homelab.lab.local    
@@ -215,3 +215,4 @@ Sempre que você executa esse playbook é criado um arquivo rke-cluster-state el
   
   PARA REMOVER O DOCKER
   ansible-playbook play-cria-cluster-rancher.yml --tag remove  
+ 
