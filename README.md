@@ -21,7 +21,7 @@ Caso não tenha um dns use o arquivo hosts:
 192.168.1.20 worker1.homelab.lab.local  
 192.168.1.20 worker2.homelab.lab.local  
  
-Copie o arquivo para todos o nodes ex: de comando:  
+Copie o arquivo para todos o nodes. (Será solicitada a senha de root dos servidores)    
 ssh-copy-id root@192.168.1.19    
 ssh-copy-id root@192.168.1.20  
 ssh-copy-id root@192.168.1.21  
