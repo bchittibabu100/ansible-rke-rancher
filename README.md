@@ -1,9 +1,5 @@
-################################################################################################################################################################################
-## Criado por Leandro Paulo																																																																										 
-## Data: 22/11/2020																																																																															 ## 
-## Instruções de uso:																																																																											     
-##																																																																																						 
-## O RKE É UM BINARIO GO QUE FAZ A CRIAÇÃO FACILITADA DE UM CLUSTER KUBERNETES																											 
+
+																						## O RKE É UM BINARIO GO QUE FAZ A CRIAÇÃO FACILITADA DE UM CLUSTER KUBERNETES																			 
 ## PARA QUE O CLUSTER SEJA CRIADO PELO RKE É NECESSÁRIO RODAR COM UM USUÁRIO COMUN, MAS QUE SEJA LIBERADO NO SUDOERS E ESTEJA NO GRUPO WHEEL											 
 ## SERÁ NECESSÁRIO ALGUNS AJUSTES NO ANSIBLE PARA USÁ-LO.EX: CRIAR OS USUARIOS NOS HOSTS, GERAR E COPIAR CHAVE RSA PARA OS NODES ENFIM ALGUNS PEQUENOS AJUSTES PARA FUNCIONAR.   
 ################################################################################################################################################################################
