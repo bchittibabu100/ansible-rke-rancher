@@ -23,10 +23,11 @@ Caso não tenha um dns use o arquivo hosts:
 192.168.1.20 worker2.homelab.lab.local  
  
 Copie o arquivo para todos o nodes. (Será solicitada a senha de root dos servidores)    
-ssh-copy-id root@192.168.1.19    
-ssh-copy-id root@192.168.1.20  
-ssh-copy-id root@192.168.1.21  
-ssh-copy-id root@192.168.1.22  
+scp /etc/hosts root@192.168.1.19    
+scp /etc/hosts root@192.168.1.20    
+scp /etc/hosts root@192.168.1.21  
+scp /etc/hosts root@192.168.1.22  
+
  
 ## Ajustes 
 - Logue no servidor do Ansible e execute os comandos abaixo:
@@ -67,6 +68,7 @@ done
 
 -  Execute o script
    sh /tmp/ajustes/ajustes.sh
+   
 
 - Faça um clone do projeto
   cd /tmp/ajustes
@@ -84,6 +86,9 @@ cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible
 
 - Copie a chave para todos os servidores incluindo o bastion  
  ssh-copy-id 192.168.1.19 (Será solicitada a senha de root de todos os nodes) 
+ ssh-copy-id 192.168.1.20 (Será solicitada a senha de root de todos os nodes) 
+ ssh-copy-id 192.168.1.21 (Será solicitada a senha de root de todos os nodes) 
+ ssh-copy-id 192.168.1.22 (Será solicitada a senha de root de todos os nodes) 
  
 
 - A criação do cluster é dependente do binário do rke mediante o carregamento do arquivo cluster.yml  
