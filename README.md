@@ -215,5 +215,5 @@ Sempre que você executa esse playbook é criado um arquivo rke-cluster-state el
  cd /etc/ansible    
   rke remove  
   
-  PARA REMOVER O DOCKER
+  PARA REMOVER O DOCKER  
   ansible-playbook play-cria-cluster-rancher.yml --tag remove  
