@@ -1,0 +1,61 @@
+---
+- name: Cria o cluster do RKE
+  hosts: localhost
+  connection: local
+  tasks:
+    - shell: "/usr/local/bin/rke up --config /etc/ansible/cluster.yml"
+
+
+- name: Cria o cluster do RKE
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Instala os Certificados
+    shell: |
+      export KUBECONFIG=/etc/ansible/kube_config_cluster.yml
+      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      kubectl create namespace cert-manager
+      helm repo remove jetstack
+      helm repo remove rancher-latest
+      helm repo add jetstack https://charts.jetstack.io
+      helm repo update
+      kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.crds.yaml
+      helm install \
+      cert-manager jetstack/cert-manager \
+      --namespace cert-manager \
+      --version v1.1.0 \
+    # --set installCRDs=true
+    
+  - name: Aguarda o cert-manager iniciar os pods
+    pause:
+      minutes: 2
+
+
+#  - name: Aguarda 120 Segundos para executar o deployment
+#    wait_for_connection:
+#      delay: 120
+#      timeout: 120
+#    delegate_to: localhost
+
+
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Instala o Rancher
+    shell: |
+      export KUBECONFIG=/etc/ansible/kube_config_cluster.yml
+      helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+      kubectl create namespace cattle-system
+      helm install rancher rancher-latest/rancher \
+        --namespace cattle-system \
+          --set hostname=rancher.homelab.lab
+    ignore_errors: True  
+
+
+  - name: Aguarda o cluster ficar pronto
+    pause:
+      minutes: 6
+
+
+      
+      

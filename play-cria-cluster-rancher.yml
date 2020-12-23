@@ -1,0 +1,318 @@
+---
+- hosts: nodes
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Atualiza o SO completo
+      yum:
+        name: '*'
+        state: latest
+        exclude: docker-ce*
+
+
+
+- hosts: nodes
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Adiciona Entrada no arquivo hosts
+      blockinfile:
+        dest: /etc/hosts
+        block: |
+          192.168.1.19 RKE-BASTION.HOMELAB.LOCAL 
+          192.168.1.20 RKE-MASTER0.HOMELAB.LOCAL
+          192.168.1.21 RKE-WORKER0.HOMELAB.LOCAL
+          192.168.1.22 RKE-WORKER1.HOMELAB.LOCAL
+
+#    - name: Cria usuario para administrar cluster
+#      user:
+#        name: admincluster
+#        comment: Admin do Cluster
+
+#     # O Usuário deve fazer parte de um grupo onde não será necessário senha 
+#    - name: Adiciona o usuario admincluster ao grupo Wheel
+#      user: name=admincluster groups=wheel append=yes state=present createhome=yes
+
+
+#      ## O Usuário deve fazer parte de um grupo onde não será necessário senha
+#    - name: Permite grupo Wheel sem senha
+#      lineinfile:
+#        dest: /etc/sudoers
+#        state: present
+#        regexp: '^%wheel'
+#        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+#        validate: 'visudo -cf %s'
+
+
+
+#    ### Definindo a senha do usuário administrador do cluster 
+#    - name: Define senha do usuario (Tem que ser um hash e preciso usar o python para gerar o Hash)
+#      become: yes
+#      user:
+#        name: admincluster
+#        comment: "Admin do cluster"
+#        password: $6$INxDHuVqvGzKOB90$f2CjwN4jDwq1OLspYU2jhuY34aTOzvlWpejEftggwhaIG7hHgIc/ze.ohF3tu4Rxj77EmK9eo0CgurHrBZqTy0
+
+   ### No Kubernetes se faz necessário desativar SWAP 
+- hosts: nodes 
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Desativa Swap para k8s
+      command: "{{ item }}"
+      become: yes
+      with_items:
+        - sed -i.bak -r 's/(.+ swap .+)/#\1/' /etc/fstab
+        - swapoff -a
+        - touch /etc/sysctl.d/k8s.conf
+        - sysctl --system
+
+
+  ### Para manter tudo em sincronia inclusive requisito de certificado é importante manter a hora certa
+
+    - name: Instalar Pacote ntp NTP
+      yum: name=ntp state=installed
+      tags: install 
+     
+
+   ## Usa um template para o servidor de NTP deve-se criar dentro da pasta handler o restart
+- hosts: nodes
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks: 
+     
+    - name: Escreve o ntp.conf com os endereços do Observatorio Nacional
+      template: src=ntp.conf.j2 dest=/etc/ntp.conf mode=644 owner=root group=root
+      tags: ntp
+      notify: 
+           restart ntp
+  handlers:
+       - name: restart ntp
+         service:
+           name: ntpd
+           state: restarted
+
+- hosts: all
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Forca a sincronizacao do NTP
+      command: "{{ item }}"
+      with_items:
+        - ntpdate -u pool.ntp.br
+        - timedatectl set-ntp 1
+      tags: ajuste
+
+
+- hosts: all
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Força um restart no serviço do ntp
+      systemd: name=ntpd state=restarted daemon_reload=no
+  tags: recarrega
+ 
+
+- hosts: nodes
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Adiciona entrada de kernel 
+      blockinfile:
+        dest: /etc/sysctl.d/k8s.conf
+        block: |
+          net.bridge.bridge-nf-call-ip6tables = 1
+          net.bridge.bridge-nf-call-iptables = 1
+
+#- hosts: nodes
+#  remote_user: admincluster
+#  become: true
+#  become_user: root
+#  become_method: sudo
+#  gather_facts: no
+#  tasks:
+#    - name: Baixa repositorio do docker
+#      get_url:
+#        url: https://download.docker.com/linux/centos/docker-ce.repo
+#        dest: /etc/yum.repos.d/docker-ce.repo
+
+- hosts: nodes
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Instala o docker somente nos nodes indicado no arquivo hosts com dois grupos criados admin e node
+      yum:
+        name:
+          - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-cli-18.09.2-3.el7.x86_64.rpm
+          - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-18.09.2-3.el7.x86_64.rpm
+#       name:  docker-ce-18.09.2-3.el7
+#        exclude: docker-ce
+
+    - name: Marca o docker para iniciar durante o boot
+      systemd:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Ajusta o socket do docker
+      command: chmod 666 /var/run/docker.sock
+
+
+- hosts: nodes
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:      
+    - name: Adiciona Usuario admincluster ao grupo docker
+      user:
+        name: admincluster
+        shell: /bin/bash
+        groups: docker
+        append: yes
+    
+
+    - name: Remove Docker para limpeza do cluster
+      yum:
+        name: docker-ce*
+        state: absent
+      tags: remove
+
+- hosts: admin
+  connection: local
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Baixando o rke para subir o cluster
+      command: "{{ item }}"
+      with_items:
+        - wget https://github.com/rancher/rke/releases/download/v1.2.3/rke_linux-amd64
+        - mv rke_linux-amd64 rke
+        - mv rke /usr/local/bin/
+        - chmod +x /usr/local/bin/rke
+        - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.0/bin/linux/amd64/kubectl
+        - chmod +x ./kubectl
+        - mv ./kubectl /usr/local/bin/kubectl
+      tags: rke
+
+
+
+- hosts: localhost
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  connection: local
+  tasks:
+    - name: Cria o cluster do RKE
+      shell: "/usr/local/bin/rke up --ignore-docker-version /etc/ansible/cluster.yml"
+  tags: cria
+
+
+- hosts: localhost
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  connection: local
+  tasks:
+    - name: Instala os Certificados
+      shell: |
+        export KUBECONFIG=/etc/ansible/kube_config_cluster.yml
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        /usr/local/bin/kubectl create namespace cert-manager
+        /usr/local/bin/helm repo remove jetstack
+        /usr/local/bin/helm repo remove rancher-latest
+        /usr/local/bin/helm repo add jetstack https://charts.jetstack.io
+        /usr/local/bin/helm repo update
+        /usr/local/bin/kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.crds.yaml
+         /usr/local/bin/helm install \
+        cert-manager jetstack/cert-manager \
+        --namespace cert-manager \
+        --version v1.1.0 \
+  tags: cert
+    # --set installCRDs=true
+
+- hosts: localhost
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  connection: local
+  tasks: 
+    - name: Aguarda o cert-manager iniciar os pods
+      pause:
+        minutes: 2
+
+
+#  - name: Aguarda 120 Segundos para executar o deployment
+#    wait_for_connection:
+#      delay: 120
+#      timeout: 120
+#    delegate_to: localhost
+
+
+
+- hosts: localhost
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  connection: local
+  tasks:
+  - name: Instala o Rancher
+    shell: |
+      export KUBECONFIG=/etc/ansible/kube_config_cluster.yml
+      /usr/local/bin/helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+      /usr/local/bin/kubectl create namespace cattle-system
+       /usr/local/bin/helm install rancher rancher-latest/rancher \
+        --namespace cattle-system \
+          --set hostname=rancher.homelab.lab
+    ignore_errors: True
+  tags: rancher
+
+- hosts: localhost
+  remote_user: admincluster
+  become: true
+  become_user: root
+  become_method: sudo
+  connection: local
+  tasks:
+    - name: Aguarda o cluster ficar pronto
+      pause:
+        minutes: 4
+  tags: aguarda
+  
+
+
+
+
+

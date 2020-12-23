@@ -1,0 +1,45 @@
+#################################################################################################################
+## Criado por Leandro Paulo
+## Data: 22/11/2020
+## Instruções de uso:
+## ## Não será comtemplado a instalação do Ansible ##
+## Crie um arquivo hosts especificando os grupos como no exemplo abaixo com o nome que voce quiser: .
+## Obs: O admin é o servidor do ansible necessário para a criação do cluster  usando o rancher pois a playbook deve ser executada a partir de um unico servidor utilizando como ## base o arquivo cluster.yml
+## vim /etc/ansible/hosts
+## [nodes]
+# 192.168.1.20
+# 192.168.1.21
+# 192.168.1.22
+# [admin]
+# 192.168.1.19
+## 1 - Gere a senha com o usuario root
+## ssh-keygen (Sem senha, digite enter para todas as perguntas)
+##
+## 2 - Descomente a linha 1 do arquivo troca_chaves_ssh.sh e execute-o
+## sh troca_chaves_ssh.sh
+##
+## 3 - Execute esse playbook como usuario root
+## cd /etc/ansible
+## ansible-playbook prepara_servers.yml
+##
+## Execute o passo 4  somente após executar o passo 3
+##
+## 4 - Gere a senha com o usuario admincluster (Usuário já existente pois foi criado pelo durante a execução do script)
+## su - admincluster
+## ssh-keygen (Sem senha, digite enter para todas as perguntas)
+##·
+## 5 - Descomente a linha 2 do arquivo sh troca_chaves_ssh.sh referente ao usuario admincluster e execute-o·
+## sudo sh troca_chaves_ssh.sh
+##
+## 6 - Edite o arquivo localizado em sudo /etc/ansible/hosts e insira  as seguintes linhas
+## [all:vars]
+## ansible_user=root
+## ansible_user=admincluster
+## become=true
+##
+## 7 - Gere o arquivo usado para criar o cluster no diretorio rke config --name cluster.yml
+## rke config --name cluster.yml 
+##
+## 7 - Execute o playbook para criar o cluster
+## ansible-playbook cluster.yml 
+#################################################################################################################
