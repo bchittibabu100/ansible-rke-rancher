@@ -75,7 +75,7 @@ done
   git clone https://github.com/leandrojpg/ansible-rke-rancher.git  
 
 - Copie o arquivo play-cria-cluster-rancher.yml para dentro da raiz de execução do ansible (Assumo que esteja em /etc/ansible - Altera se necessário).  
-cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible 
+cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible   
 
 
 - Logue com o usuário admincluster no servidor do ANSIBLE aqui representado pelo 192.168.1.19  
@@ -84,11 +84,11 @@ cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible
 - Gere a chave rsa do usuario admincluster  
  ssh-keygen (Pressione enter em todas as perguntas)  
 
-- Copie a chave para todos os servidores incluindo o bastion  
- ssh-copy-id 192.168.1.19 (Será solicitada a senha de root de todos os nodes) 
- ssh-copy-id 192.168.1.20 (Será solicitada a senha de root de todos os nodes) 
- ssh-copy-id 192.168.1.21 (Será solicitada a senha de root de todos os nodes) 
- ssh-copy-id 192.168.1.22 (Será solicitada a senha de root de todos os nodes) 
+- Copie a chave para todos os servidores incluindo o bastion    
+ ssh-copy-id 192.168.1.19 (Será solicitada a senha de root de todos os nodes)   
+ ssh-copy-id 192.168.1.20 (Será solicitada a senha de root de todos os nodes)   
+ ssh-copy-id 192.168.1.21 (Será solicitada a senha de root de todos os nodes)   
+ ssh-copy-id 192.168.1.22 (Será solicitada a senha de root de todos os nodes)   
  
 
 - A criação do cluster é dependente do binário do rke mediante o carregamento do arquivo cluster.yml  
