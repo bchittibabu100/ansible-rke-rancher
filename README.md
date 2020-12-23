@@ -6,8 +6,6 @@
 ## SERÁ NECESSÁRIO ALGUNS AJUSTES NO ANSIBLE PARA USÁ-LO.EX: CRIAR OS USUARIOS NOS HOSTS, GERAR E COPIAR CHAVE RSA PARA OS NODES ENFIM ALGUNS PEQUENOS AJUSTES PARA FUNCIONAR.   
 ################################################################################################################################################################################
 
-
-##################################
 AMBIENTE: 3 SERVIDORES
 192.168.1.20 -- > MASTER - ETCD
 192.168.1.21 -- > WORKER
