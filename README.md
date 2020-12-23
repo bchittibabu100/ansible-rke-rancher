@@ -71,8 +71,8 @@ done
    
 
 - Faça um clone do projeto
-  cd /tmp/ajustes
-  git clone https://github.com/leandrojpg/ansible-rke-rancher.git
+  cd /tmp/ajustes  
+  git clone https://github.com/leandrojpg/ansible-rke-rancher.git  
 
 - Copie o arquivo play-cria-cluster-rancher.yml para dentro da raiz de execução do ansible (Assumo que esteja em /etc/ansible - Altera se necessário).  
 cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible 
