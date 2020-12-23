@@ -1,12 +1,12 @@
-# Ansible + RKE
+# Ansible + RKE - Instruções de Uso
 																																						
-Data: 23/12/2020																																								
-Instruções de uso:
-leandrojpg@gmail.com																																							
+Data Criação: 23/12/2020																																								
+Qualquer dúvida por favor me envie um e-mail :  
+leandrojpg@gmail.com	  																																						
 																																											
 O RKE É UM BINARIO GO QUE FAZ A CRIAÇÃO FACILITADA DE UM CLUSTER KUBERNETES.
 																									
-PARA QUE O CLUSTER SEJA CRIADO PELO RKE É NECESSÁRIO EXECUTAR A PLAYBOOK COM UM USUÁRIO COMUN, AQUI CHAMADO DE ADMINCLUSTER. PORÉM SERÃO NECESSÁRIOS ALGUNS AJUSTES PARA A EXECUÇÃO DESSA PLAY.
+PARA QUE O CLUSTER SEJA CRIADO VIA ANSIBLE UTILIZANDO O RKE É NECESSÁRIO EXECUTAR A PLAYBOOK COM UM USUÁRIO COMUN, AQUI CHAMADO DE ADMINCLUSTER. PORÉM SERÃO NECESSÁRIOS ALGUNS AJUSTES PARA A EXECUÇÃO DESSA PLAY.
 
 # OBS: Não será contemplada a instalação do Ansible
 Ambiente de exemplo: 
@@ -215,4 +215,3 @@ Sempre que você executa esse playbook é criado um arquivo rke-cluster-state el
   
   PARA REMOVER O DOCKER
   ansible-playbook play-cria-cluster-rancher.yml --tag remove  
- 
