@@ -191,9 +191,10 @@ Edite novamente o arquivo acima cluster.yml que acabamos de gerar e modifique  a
   192.168.1.22  
   [admin]  
   192.168.1.19  
-- Execute esse playbook como usuario admincluster  
- cd /etc/ansible  
- ansible-playbook play-cria-cluster-rancher.yml --skip-tag remove
+- Execute esse playbook como usuario admincluster
+  su - admincluster  
+  cd /etc/ansible  
+  ansible-playbook play-cria-cluster-rancher.yml --skip-tag remove
 
 - Uma vez o cluster criado para poder testar edite o arquivo hosts da sua máquina e aponte para o worker1   (Geralmente o pod sobe no worker1)  
  
