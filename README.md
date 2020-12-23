@@ -194,7 +194,7 @@ Edite novamente o arquivo acima cluster.yml que acabamos de gerar e modifique  a
 - Execute esse playbook como usuario admincluster
   su - admincluster  
   cd /etc/ansible  
-  ansible-playbook play-cria-cluster-rancher.yml --skip-tag remove
+  ansible-playbook play-cria-cluster-rancher.yml --skip-tag remove  
 
 - Uma vez o cluster criado para poder testar edite o arquivo hosts da sua máquina e aponte para o worker1   (Geralmente o pod sobe no worker1)  
  
