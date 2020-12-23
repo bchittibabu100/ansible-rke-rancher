@@ -22,10 +22,10 @@ Caso não tenha um dns use o arquivo hosts:
 192.168.1.20 worker2.homelab.lab.local  
  
 Copie o arquivo para todos o nodes ex: de comando
-ssh-copy-id root@192.168.1.19
-ssh-copy-id root@192.168.1.20
-ssh-copy-id root@192.168.1.21
-ssh-copy-id root@192.168.1.22
+ssh-copy-id root@192.168.1.19  
+ssh-copy-id root@192.168.1.20  
+ssh-copy-id root@192.168.1.21  
+ssh-copy-id root@192.168.1.22  
  
 ## Ajustes 
 - Logue no servidor do Ansible e execute os comandos abaixo:
@@ -215,4 +215,3 @@ Sempre que você executa esse playbook é criado um arquivo rke-cluster-state el
   
   PARA REMOVER O DOCKER
   ansible-playbook play-cria-cluster-rancher.yml --tag remove  
- 
