@@ -1,6 +1,7 @@
 # Ansible + RKE - Instruções de Uso  
 																																						
-Data Criação: 23/12/2020  																																								
+Data Criação: 23/12/2020  
+  
 Qualquer dúvida por favor me envie um e-mail:   
 leandrojpg@gmail.com	  																																						
 																																											
