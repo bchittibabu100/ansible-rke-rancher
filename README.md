@@ -35,7 +35,7 @@ mkdir /tmp/ajustes
 touch /tmp/ajustes/lista_nodes.txt  
 touch /tmp/ajustes/ajustes.sh  
 
-- Crie o arquivo abaixo, esse será a lista dos seus nodes:
+- Crie o arquivo abaixo, esse será a lista dos seus nodes:  
 vim /tmp/ajustes/lista_nodes.txt  
 192.168.1.19  
 192.168.1.20  
