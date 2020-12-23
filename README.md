@@ -23,10 +23,10 @@ Caso não tenha um dns use o arquivo hosts:
 192.168.1.20 worker2.homelab.lab.local  
  
 Copie o arquivo para todos o nodes. (Será solicitada a senha de root dos servidores)    
-scp /etc/hosts root@192.168.1.19    
-scp /etc/hosts root@192.168.1.20    
-scp /etc/hosts root@192.168.1.21  
-scp /etc/hosts root@192.168.1.22  
+scp /etc/hosts root@192.168.1.19:/etc     
+scp /etc/hosts root@192.168.1.20:/etc  
+scp /etc/hosts root@192.168.1.21:/etc    
+scp /etc/hosts root@192.168.1.22:/etc    
 
  
 ## Ajustes 
