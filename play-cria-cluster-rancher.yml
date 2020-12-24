@@ -205,7 +205,7 @@
         state: absent
       tags: remove
 
-    - name: Remove Sockt
+    - name: Remove arquivo Socket
       file:
         path: /var/lib/docker
         state: absent
