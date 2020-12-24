@@ -205,6 +205,13 @@
         state: absent
       tags: remove
 
+    - name: Remove Sockt
+      file:
+        path: /var/lib/docker
+        state: absent
+      tags: remove
+
+
 - hosts: admin
   connection: local
   remote_user: admincluster
@@ -234,7 +241,7 @@
   become_method: sudo
   connection: local
   tasks:
-    - name: Cria o cluster do RKE
+    - name: Cria o cluster usando o rke
       shell: "/usr/local/bin/rke up --ignore-docker-version /etc/ansible/cluster.yml"
   tags: cria
 
@@ -310,7 +317,7 @@
   tasks:
     - name: Aguarda o cluster ficar pronto
       pause:
-        minutes: 4
+        minutes: 5
   tags: aguarda
   
 
