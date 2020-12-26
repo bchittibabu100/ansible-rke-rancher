@@ -191,7 +191,7 @@ cloud_provider:
   name: ""
 prefix_path: ""
 win_prefix_path: ""
-addon_job_timeout: 120
+addon_job_timeout: 0
 bastion_host:
   address: ""
   port: ""

@@ -243,8 +243,10 @@
   tasks:
     - name: Cria o cluster usando o rke
       shell: "/usr/local/bin/rke up --ignore-docker-version /etc/ansible/cluster.yml"
-  tags: cria
 
+    - name: Altera permissao do arquivo kubeconfig
+      file: dest=/etc/ansible/kube_config_cluster.yml mode=600
+  tags: cria
 
 - hosts: localhost
   remote_user: admincluster
@@ -253,7 +255,7 @@
   become_method: sudo
   connection: local
   tasks:
-    - name: Instala os Certificados
+    - name: Instala o Cert-Manager
       shell: |
         export KUBECONFIG=/etc/ansible/kube_config_cluster.yml
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
@@ -262,11 +264,14 @@
         /usr/local/bin/helm repo remove rancher-latest
         /usr/local/bin/helm repo add jetstack https://charts.jetstack.io
         /usr/local/bin/helm repo update
-        /usr/local/bin/kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.crds.yaml
+        /usr/local/bin/kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml
          /usr/local/bin/helm install \
         cert-manager jetstack/cert-manager \
         --namespace cert-manager \
-        --version v1.1.0 \
+        --version v1.0.4 \
+      failed_when: false
+      ignore_errors: True
+      
   tags: cert
     # --set installCRDs=true
 
@@ -317,8 +322,15 @@
   tasks:
     - name: Aguarda o cluster ficar pronto
       pause:
-        minutes: 5
-  tags: aguarda
+        minutes: 6
+
+    - name: Informacoes Importantes
+      debug:
+        msg:
+        - '- PARABENS, CLUSTER CRIADO COM SUCESSO. CONFIGURE O ARQUIVO HOSTS DA SUA MAQUINA E APONTE O NOME "rancher.homelab.lab" PARA O WORKER1'
+        - '- FEITO ISSO ACESSE  HTTPS://RANCHER.HOMELAB.LAB.LOCAL'
+  
+  tags: mensagem      
   
 
 
