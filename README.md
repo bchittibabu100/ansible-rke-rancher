@@ -43,7 +43,8 @@ vim /tmp/ajustes/lista_nodes.txt
 192.168.1.22
 
 - Insira dentro do arquivo /tmp/ajustes/ajustes.sh
-Esse pequeno script cria em todos os servidores o usuário admincluster e seta uma senha (s&nh@)  e ajusta o sudoers. (Altere o trecho echo "s&nh@" para a sua senha de preferência )
+Esse pequeno script cria em todos os servidores o usuário admincluster e seta uma senha (s&nh@)  e ajusta o sudoers. (Altere o trecho echo "s&nh@" para a sua senha de preferência )  
+vim /tmp/ajustes/ajustes.sh  
 
   #!/bin/bash
   for i in $(cat /tmp/ajustes/lista_nodes.txt);do  
@@ -95,7 +96,7 @@ cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible
   que deve ser gerado, a partir desse arquivo é que se dará a instalação. (Vamos deixar pronto)  
 
    cd /etc/ansible   
-   wget https://github.com/rancher/rke/releases/download/v1.2.1/rke_linux-amd64  
+   wget https://github.com/rancher/rke/releases/download/v1.2.3/rke_linux-amd64  
    sudo mv rke_linux-amd64 rke  
    sudo mv rke /usr/local/bin/  
    sudo chmod +x /usr/local/bin/rke  
