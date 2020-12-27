@@ -76,7 +76,7 @@ done
   git clone https://github.com/leandrojpg/ansible-rke-rancher.git  
 
 - Copie o arquivo play-cria-cluster-rancher.yml para dentro da raiz de execução do ansible (Assumo que esteja em /etc/ansible - Altera se necessário).  
-cp ansible-cluster-rke/play-cria-cluster-rancher.yml /etc/ansible   
+cp ansible-rke-rancher/play-cria-cluster-rancher.yml /etc/ansible   
 
 
 - Logue com o usuário admincluster no servidor do ANSIBLE aqui representado pelo 192.168.1.19  
