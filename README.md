@@ -207,7 +207,7 @@ Edite novamente o arquivo acima cluster.yml que acabamos de gerar e modifique  a
  
   192.168.1.21 rancher.homelab.lab.local (Altere para o nome que você escolheu para seu cluster)    
  
-  Acesse por ex: https://rancher.homelab.lab.local  
+  Acesse por ex: https://rancher.homelab.lab    
  
 ########################################################
 
