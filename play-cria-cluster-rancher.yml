@@ -31,34 +31,7 @@
           192.168.1.21 RKE-WORKER0.HOMELAB.LOCAL
           192.168.1.22 RKE-WORKER1.HOMELAB.LOCAL
 
-#    - name: Cria usuario para administrar cluster
-#      user:
-#        name: admincluster
-#        comment: Admin do Cluster
 
-#     # O Usuário deve fazer parte de um grupo onde não será necessário senha 
-#    - name: Adiciona o usuario admincluster ao grupo Wheel
-#      user: name=admincluster groups=wheel append=yes state=present createhome=yes
-
-
-#      ## O Usuário deve fazer parte de um grupo onde não será necessário senha
-#    - name: Permite grupo Wheel sem senha
-#      lineinfile:
-#        dest: /etc/sudoers
-#        state: present
-#        regexp: '^%wheel'
-#        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-#        validate: 'visudo -cf %s'
-
-
-
-#    ### Definindo a senha do usuário administrador do cluster 
-#    - name: Define senha do usuario (Tem que ser um hash e preciso usar o python para gerar o Hash)
-#      become: yes
-#      user:
-#        name: admincluster
-#        comment: "Admin do cluster"
-#        password: $6$INxDHuVqvGzKOB90$f2CjwN4jDwq1OLspYU2jhuY34aTOzvlWpejEftggwhaIG7hHgIc/ze.ohF3tu4Rxj77EmK9eo0CgurHrBZqTy0
 
    ### No Kubernetes se faz necessário desativar SWAP 
 - hosts: nodes 
@@ -145,17 +118,7 @@
           net.bridge.bridge-nf-call-ip6tables = 1
           net.bridge.bridge-nf-call-iptables = 1
 
-#- hosts: nodes
-#  remote_user: admincluster
-#  become: true
-#  become_user: root
-#  become_method: sudo
-#  gather_facts: no
-#  tasks:
-#    - name: Baixa repositorio do docker
-#      get_url:
-#        url: https://download.docker.com/linux/centos/docker-ce.repo
-#        dest: /etc/yum.repos.d/docker-ce.repo
+
 
 - hosts: nodes
   remote_user: admincluster
@@ -285,15 +248,6 @@
     - name: Aguarda o cert-manager iniciar os pods
       pause:
         minutes: 2
-
-
-#  - name: Aguarda 120 Segundos para executar o deployment
-#    wait_for_connection:
-#      delay: 120
-#      timeout: 120
-#    delegate_to: localhost
-
-
 
 - hosts: localhost
   remote_user: admincluster
