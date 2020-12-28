@@ -282,7 +282,7 @@
       debug:
         msg:
         - '- PARABENS, CLUSTER CRIADO COM SUCESSO. CONFIGURE O ARQUIVO HOSTS DA SUA MAQUINA E APONTE O NOME "rancher.homelab.lab" PARA O WORKER1'
-        - '- FEITO ISSO ACESSE  HTTPS://RANCHER.HOMELAB.LAB.LOCAL'
+        - '- FEITO ISSO ACESSE  HTTPS://RANCHER.HOMELAB.LAB'
   
   tags: mensagem      
   
